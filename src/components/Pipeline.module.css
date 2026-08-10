@@ -1,0 +1,120 @@
+.flow {
+  list-style: none;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.35rem;
+}
+
+.wire {
+  position: absolute;
+  left: 0.4rem;
+  right: 0.4rem;
+  top: 0.35rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--auth-gold), transparent);
+  overflow: hidden;
+}
+
+.wire::after {
+  content: '';
+  position: absolute;
+  inset: -1px auto -1px 0;
+  width: 28%;
+  background: linear-gradient(90deg, transparent, #fff, transparent);
+  animation: wire-scan 2.8s linear infinite;
+}
+
+@keyframes wire-scan {
+  from {
+    transform: translateX(-40%);
+  }
+  to {
+    transform: translateX(380%);
+  }
+}
+
+.flow li {
+  position: relative;
+  display: grid;
+  gap: 0.35rem;
+  padding-top: 0.85rem;
+}
+
+.node {
+  position: absolute;
+  top: -0.15rem;
+  left: 0.15rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 184, 74, 0.55);
+  background: rgba(4, 9, 20, 0.9);
+  transition:
+    background 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    transform 0.35s var(--ease);
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: var(--fog);
+}
+
+.flow h3 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+}
+
+.flow p {
+  color: var(--fog);
+  font-size: 0.86rem;
+  max-width: 16ch;
+}
+
+.active .node {
+  background: var(--auth-gold);
+  transform: scale(1.25);
+  box-shadow: 0 0 16px rgba(232, 184, 74, 0.55);
+}
+
+.active h3 {
+  color: var(--auth-gold);
+}
+
+@media (max-width: 760px) {
+  .flow {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 0.85rem;
+  }
+
+  .wire {
+    display: none;
+  }
+
+  .node {
+    display: none;
+  }
+
+  .flow li {
+    padding-top: 0;
+    border-left: 2px solid rgba(232, 184, 74, 0.35);
+    padding-left: 0.7rem;
+  }
+
+  .active {
+    border-left-color: var(--auth-gold);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wire::after {
+    animation: none;
+  }
+}

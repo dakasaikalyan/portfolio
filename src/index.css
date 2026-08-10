@@ -1,0 +1,139 @@
+:root {
+  --navy-deep: #040914;
+  --navy: #081526;
+  --navy-mid: #0d2138;
+  --signal-cyan: #3ecfe4;
+  --signal-cyan-soft: rgba(62, 207, 228, 0.16);
+  --alarm-red: #ff4d57;
+  --alarm-soft: rgba(255, 77, 87, 0.14);
+  --auth-gold: #e8b84a;
+  --auth-soft: rgba(232, 184, 74, 0.14);
+  --clean-mint: #2fd99a;
+  --mint-soft: rgba(47, 217, 154, 0.14);
+  --fog: #9bb0c4;
+  --paper: #eef4f9;
+  --paper-dim: rgba(238, 244, 249, 0.72);
+  --hairline: rgba(155, 176, 196, 0.2);
+  --surface: rgba(4, 9, 20, 0.55);
+  --surface-strong: rgba(4, 9, 20, 0.78);
+  --brand-gradient: linear-gradient(115deg, #ffffff 8%, #d7f6fb 38%, var(--signal-cyan) 100%);
+
+
+  --font-display: 'Syne', 'Avenir Next', sans-serif;
+  --font-body: 'Figtree', 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --radius: 0.55rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background:
+    radial-gradient(1200px 700px at 12% -10%, rgba(62, 207, 228, 0.08), transparent 55%),
+    radial-gradient(900px 600px at 88% 0%, rgba(47, 217, 154, 0.05), transparent 50%),
+    var(--navy-deep);
+  color: var(--paper);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal-cyan);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(62, 207, 228, 0.35);
+  color: var(--paper);
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.65;
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes shimmer-line {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes cue-bounce {
+  0%,
+  100% {
+    transform: scaleY(0.45);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
