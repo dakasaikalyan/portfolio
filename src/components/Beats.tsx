@@ -1,6 +1,6 @@
 import Beat from './Beat'
 import Finale from './Finale'
-import Pipeline from './Pipeline'
+import Pipeline from './Pipeline.tsx'
 import Stats from './Stats'
 import beatStyles from './Beat.module.css'
 import styles from './Voyage.module.css'
