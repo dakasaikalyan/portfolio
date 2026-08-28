@@ -23,13 +23,14 @@ type Packet = { t: number; lane: number; spoof: boolean }
 
 export default function WaveCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const { progress, stage, localProgress, corruption, authGlow, introComplete } = useVoyageProgress()
+  const { progress, stage, localProgress, corruption, authGlow, introComplete, vehicleType } = useVoyageProgress()
   const reduced = useReducedMotion()
-  const stateRef = useRef({ progress, stage, localProgress, corruption, authGlow, introComplete })
+  const stateRef = useRef({ progress, stage, localProgress, corruption, authGlow, introComplete, vehicleType })
 
   useEffect(() => {
-    stateRef.current = { progress, stage, localProgress, corruption, authGlow, introComplete }
-  }, [progress, stage, localProgress, corruption, authGlow, introComplete])
+    stateRef.current = { progress, stage, localProgress, corruption, authGlow, introComplete, vehicleType }
+  }, [progress, stage, localProgress, corruption, authGlow, introComplete, vehicleType])
+
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -59,14 +60,28 @@ export default function WaveCanvas() {
     }
 
     const waveY = (x: number, baseline: number, amp: number, phase: number, p: number, noise: number) => {
-      let y = baseline + Math.sin(x * 0.015 + p * 30 + phase) * amp
-      if (noise > 0) {
-        const jitterScale = reduced ? 0.2 : 1
-        y +=
-          Math.sin(x * 0.07 + p * 55 + phase * 2) * amp * 0.45 * noise +
-          Math.sin(x * 0.12 + frame * 0.08 + phase) * amp * 0.2 * noise * jitterScale
+      const { vehicleType: vt } = stateRef.current
+      if (vt === 'plane') {
+        // Plane flight path: very flat, smooth navigation line
+        let y = baseline + Math.sin(x * 0.004 + p * 8 + phase) * (amp * 0.25)
+        if (noise > 0) {
+          const jitterScale = reduced ? 0.2 : 1
+          y +=
+            Math.sin(x * 0.08 + p * 60 + phase * 2.2) * amp * 0.8 * noise +
+            Math.sin(x * 0.15 + frame * 0.12 + phase) * amp * 0.35 * noise * jitterScale
+        }
+        return y
+      } else {
+        // Ship sea waves
+        let y = baseline + Math.sin(x * 0.015 + p * 30 + phase) * amp
+        if (noise > 0) {
+          const jitterScale = reduced ? 0.2 : 1
+          y +=
+            Math.sin(x * 0.07 + p * 55 + phase * 2) * amp * 0.45 * noise +
+            Math.sin(x * 0.12 + frame * 0.08 + phase) * amp * 0.2 * noise * jitterScale
+        }
+        return y
       }
-      return y
     }
 
     const drawWave = (
@@ -105,6 +120,7 @@ export default function WaveCanvas() {
         corruption: c,
         authGlow: a,
         introComplete: journey,
+        vehicleType: vt,
       } = stateRef.current
       ctx.clearRect(0, 0, w, h)
 
@@ -113,62 +129,144 @@ export default function WaveCanvas() {
       const amp = journey ? 14 + a * 2 : 7
       const waveAlpha = journey ? 1 : 0.28
 
-      // Satellite-style RF rings drifting down — only after intro
-      if (!reduced && journey) {
-        for (let i = 0; i < 4; i += 1) {
-          const life = (frame * 0.008 + i * 0.25) % 1
-          const cx = w * (0.18 + i * 0.2)
-          const cy = h * (0.12 + life * 0.28)
-          const r = 12 + life * 70
-          ctx.beginPath()
-          ctx.arc(cx, cy, r, 0, Math.PI * 2)
-          const ringTone =
-            c > 0.25 && i % 2 === 0
-              ? `rgba(255, 77, 87, ${(1 - life) * 0.28})`
-              : `rgba(62, 207, 228, ${(1 - life) * (0.22 + a * 0.15)})`
-          ctx.strokeStyle = ringTone
-          ctx.lineWidth = 1.2
-          ctx.stroke()
+      if (vt === 'plane') {
+        // --- AVIATION FLIGHT HUD DISPLAY ---
+        // 1. Draw 3 horizontal altitude flight levels (dashed)
+        ctx.save()
+        ctx.strokeStyle = c > 0.2 ? 'rgba(255, 77, 87, 0.12)' : 'rgba(155, 176, 196, 0.12)'
+        ctx.lineWidth = 1
+        ctx.setLineDash([4, 6])
+        ctx.beginPath()
+        // 30,000 FT
+        ctx.moveTo(0, baseline - 45)
+        ctx.lineTo(w, baseline - 45)
+        // 20,000 FT
+        ctx.moveTo(0, baseline)
+        ctx.lineTo(w, baseline)
+        // 10,000 FT
+        ctx.moveTo(0, baseline + 45)
+        ctx.lineTo(w, baseline + 45)
+        ctx.stroke()
+        ctx.restore()
+
+        // Labels
+        ctx.fillStyle = c > 0.2 ? 'rgba(255, 77, 87, 0.35)' : 'rgba(155, 176, 196, 0.35)'
+        ctx.font = '7px monospace'
+        ctx.fillText('ALT 30K FT', 12, baseline - 49)
+        ctx.fillText('ALT 20K FT', 12, baseline - 4)
+        ctx.fillText('ALT 10K FT', 12, baseline + 41)
+
+        // 2. Draw vertical speed/distance indicator ticks
+        ctx.save()
+        ctx.strokeStyle = c > 0.2 ? 'rgba(255, 77, 87, 0.05)' : 'rgba(155, 176, 196, 0.06)'
+        ctx.lineWidth = 0.8
+        ctx.beginPath()
+        const spacing = 120
+        const scrollOffset = (frame * 1.6) % spacing
+        for (let x = w - scrollOffset; x >= 0; x -= spacing) {
+          ctx.moveTo(x, baseline - 60)
+          ctx.lineTo(x, baseline + 60)
         }
-      }
+        ctx.stroke()
+        ctx.restore()
 
-      if (journey && c > 0.02) {
+        // 3. Draw secondary / spoofed background waves under attack
+        if (journey && c > 0.02) {
+          drawWave(
+            baseline + 12,
+            amp * 0.95,
+            1.4,
+            `rgba(255, 77, 87, ${0.3 + c * 0.55})`,
+            2.1,
+            c,
+            true,
+          )
+        }
+
+        // 4. Draw primary flight trajectory path
         drawWave(
-          baseline + 12,
-          amp * 0.95,
-          1.4,
-          `rgba(255, 77, 87, ${0.3 + c * 0.55})`,
-          2.1,
-          c,
-          true,
+          baseline,
+          amp,
+          0,
+          journey ? mainColor : `rgba(62, 207, 228, ${0.22})`,
+          journey ? 2.4 : 1.4,
+          journey ? c * 0.85 : 0,
+          journey,
         )
-      }
 
-      drawWave(
-        baseline,
-        amp,
-        0,
-        journey ? mainColor : `rgba(62, 207, 228, ${0.22})`,
-        journey ? 2.4 : 1.4,
-        journey ? c * 0.85 : 0,
-        journey,
-      )
+        // 5. Soft path glow overlay
+        ctx.beginPath()
+        for (let x = 0; x <= w; x += 4) {
+          const y = waveY(x, baseline, amp, 0, p, journey ? c * 0.85 : 0)
+          if (x === 0) ctx.moveTo(x, y)
+          else ctx.lineTo(x, y)
+        }
+        ctx.lineTo(w, baseline + 40)
+        ctx.lineTo(0, baseline + 40)
+        ctx.closePath()
+        const fill = ctx.createLinearGradient(0, baseline - 15, 0, baseline + 40)
+        fill.addColorStop(0, `rgba(62, 207, 228, ${(0.05 + a * 0.06) * waveAlpha})`)
+        fill.addColorStop(1, 'rgba(62, 207, 228, 0)')
+        ctx.fillStyle = fill
+        ctx.fill()
 
-      // Soft fill under main wave
-      ctx.beginPath()
-      for (let x = 0; x <= w; x += 4) {
-        const y = waveY(x, baseline, amp, 0, p, journey ? c * 0.85 : 0)
-        if (x === 0) ctx.moveTo(x, y)
-        else ctx.lineTo(x, y)
+      } else {
+        // --- ORIGINAL MARINE OCEAN WAVES DISPLAY ---
+        if (!reduced && journey) {
+          for (let i = 0; i < 4; i += 1) {
+            const life = (frame * 0.008 + i * 0.25) % 1
+            const cx = w * (0.18 + i * 0.2)
+            const cy = h * (0.12 + life * 0.28)
+            const r = 12 + life * 70
+            ctx.beginPath()
+            ctx.arc(cx, cy, r, 0, Math.PI * 2)
+            const ringTone =
+              c > 0.25 && i % 2 === 0
+                ? `rgba(255, 77, 87, ${(1 - life) * 0.28})`
+                : `rgba(62, 207, 228, ${(1 - life) * (0.22 + a * 0.15)})`
+            ctx.strokeStyle = ringTone
+            ctx.lineWidth = 1.2
+            ctx.stroke()
+          }
+        }
+
+        if (journey && c > 0.02) {
+          drawWave(
+            baseline + 12,
+            amp * 0.95,
+            1.4,
+            `rgba(255, 77, 87, ${0.3 + c * 0.55})`,
+            2.1,
+            c,
+            true,
+          )
+        }
+
+        drawWave(
+          baseline,
+          amp,
+          0,
+          journey ? mainColor : `rgba(62, 207, 228, ${0.22})`,
+          journey ? 2.4 : 1.4,
+          journey ? c * 0.85 : 0,
+          journey,
+        )
+
+        ctx.beginPath()
+        for (let x = 0; x <= w; x += 4) {
+          const y = waveY(x, baseline, amp, 0, p, journey ? c * 0.85 : 0)
+          if (x === 0) ctx.moveTo(x, y)
+          else ctx.lineTo(x, y)
+        }
+        ctx.lineTo(w, baseline + 80)
+        ctx.lineTo(0, baseline + 80)
+        ctx.closePath()
+        const fill = ctx.createLinearGradient(0, baseline - 20, 0, baseline + 80)
+        fill.addColorStop(0, `rgba(62, 207, 228, ${(0.08 + a * 0.1) * waveAlpha})`)
+        fill.addColorStop(1, 'rgba(62, 207, 228, 0)')
+        ctx.fillStyle = fill
+        ctx.fill()
       }
-      ctx.lineTo(w, baseline + 80)
-      ctx.lineTo(0, baseline + 80)
-      ctx.closePath()
-      const fill = ctx.createLinearGradient(0, baseline - 20, 0, baseline + 80)
-      fill.addColorStop(0, `rgba(62, 207, 228, ${(0.08 + a * 0.1) * waveAlpha})`)
-      fill.addColorStop(1, 'rgba(62, 207, 228, 0)')
-      ctx.fillStyle = fill
-      ctx.fill()
 
       if (journey && st === 4) {
         const gateX = w * 0.5

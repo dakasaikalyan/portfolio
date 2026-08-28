@@ -52,4 +52,68 @@
   .live {
     animation: none;
   }
+  .radarHand {
+    animation: none !important;
+  }
 }
+
+.radarHand {
+  animation: radar-sweep 2.6s linear infinite;
+}
+
+.shieldDome {
+  transition: stroke 0.4s var(--ease), stroke-width 0.4s var(--ease);
+}
+
+.shieldActive {
+  animation: shield-pulse 2.2s ease-in-out infinite alternate;
+}
+
+.shieldGlitched {
+  animation: shield-flicker 0.12s linear infinite;
+}
+
+@keyframes radar-sweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shield-pulse {
+  0% {
+    opacity: 0.45;
+    stroke-width: 1.5;
+  }
+  100% {
+    opacity: 0.9;
+    stroke-width: 3.5;
+  }
+}
+
+@keyframes shield-flicker {
+  0%, 100% { opacity: 0.22; }
+  20%, 80% { opacity: 0.55; }
+  40% { opacity: 0.08; }
+  60% { opacity: 0.4; }
+}
+
+.thrustJet {
+  transform-origin: 8px 52px;
+  animation: thrust-pulse 0.2s ease-in-out infinite alternate;
+}
+
+@keyframes thrust-pulse {
+  0% {
+    opacity: 0.65;
+    transform: scaleX(0.8) scaleY(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1.2) scaleY(1.1);
+  }
+}
+
+

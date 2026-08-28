@@ -1,9 +1,13 @@
+import { useVoyageProgress } from '../context/VoyageProgressContext'
 import AuthSeal from './AuthSeal'
 import styles from './Finale.module.css'
 
 const CHAIN = ['ATTACK', 'DETECT', 'AUTHENTICATE', 'PROTECT'] as const
 
 export default function Finale() {
+  const { vehicleType } = useVoyageProgress()
+  const isPlane = vehicleType === 'plane'
+
   return (
     <div className={styles.finale}>
       <div className={styles.rail} aria-hidden="true">
@@ -22,12 +26,21 @@ export default function Finale() {
         <h2 className={styles.headline}>
           <span>The verification layer</span>
           <span>between raw signal</span>
-          <span>and every voyage.</span>
+          <span>{isPlane ? 'and every flight.' : 'and every voyage.'}</span>
         </h2>
 
         <p className={styles.body}>
-          Attack. Detection. Authentication. Protection — delivered as a professional RF trust
-          service for modern fleets.
+          {isPlane ? (
+            <>
+              Attack. Detection. Authentication. Protection — delivered as a professional RF trust
+              service for modern aviation fleets.
+            </>
+          ) : (
+            <>
+              Attack. Detection. Authentication. Protection — delivered as a professional RF trust
+              service for modern maritime fleets.
+            </>
+          )}
         </p>
 
         <div className={styles.chain} aria-label="Service chain">

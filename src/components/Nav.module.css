@@ -66,33 +66,38 @@
   gap: 1.15rem;
 }
 
-.links a {
+.navTab {
   position: relative;
   font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--fog);
-  padding: 0.35rem 0;
+  padding: 0.35rem 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
   transition: color 0.25s var(--ease);
 }
 
-.links a::after {
+.navTab::after {
   content: '';
   position: absolute;
   left: 0;
   right: 100%;
   bottom: 0;
-  height: 1px;
+  height: 2px;
   background: var(--signal-cyan);
   transition: right 0.3s var(--ease);
 }
 
-.links a:hover {
+.navTab:hover,
+.navTabActive {
   color: var(--paper);
 }
 
-.links a:hover::after {
+.navTab:hover::after,
+.navTabActive::after {
   right: 0;
 }
 
@@ -124,3 +129,126 @@
     display: none;
   }
 }
+
+.controls {
+  pointer-events: auto;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.audioToggle {
+  background: none;
+  border: none;
+  color: var(--fog);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  padding: 0.35rem 0.55rem;
+  border-radius: var(--radius);
+  border: 1px solid rgba(155, 176, 196, 0.15);
+  background: rgba(4, 9, 20, 0.45);
+  transition: all 0.25s var(--ease);
+}
+
+.audioToggle:hover {
+  color: var(--signal-cyan);
+  border-color: rgba(62, 207, 228, 0.35);
+  background: rgba(62, 207, 228, 0.05);
+}
+
+.soundIcon {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.2px;
+  width: 14px;
+  height: 11px;
+}
+
+.soundIcon span {
+  display: block;
+  width: 1.8px;
+  height: 100%;
+  background-color: currentColor;
+  border-radius: 1px;
+  transition: height 0.25s var(--ease);
+}
+
+.soundIcon span:nth-child(1) { height: 35%; }
+.soundIcon span:nth-child(2) { height: 35%; }
+.soundIcon span:nth-child(3) { height: 35%; }
+.soundIcon span:nth-child(4) { height: 35%; }
+
+.playing span:nth-child(1) {
+  animation: audio-bounce-1 0.9s ease-in-out infinite alternate;
+}
+.playing span:nth-child(2) {
+  animation: audio-bounce-2 0.75s ease-in-out infinite alternate;
+}
+.playing span:nth-child(3) {
+  animation: audio-bounce-3 0.85s ease-in-out infinite alternate;
+}
+.playing span:nth-child(4) {
+  animation: audio-bounce-4 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes audio-bounce-1 {
+  0% { height: 20%; }
+  100% { height: 85%; }
+}
+@keyframes audio-bounce-2 {
+  0% { height: 30%; }
+  100% { height: 100%; }
+}
+@keyframes audio-bounce-3 {
+  0% { height: 15%; }
+  100% { height: 75%; }
+}
+@keyframes audio-bounce-4 {
+  0% { height: 25%; }
+  100% { height: 90%; }
+}
+
+.audioLabel {
+  user-select: none;
+}
+
+.vehicleSelect {
+  display: flex;
+  background: rgba(4, 9, 20, 0.65);
+  border: 1px solid var(--hairline);
+  padding: 2px;
+  border-radius: 4px;
+  gap: 1.5px;
+}
+
+.vehicleBtn {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.45rem;
+  border: none;
+  background: transparent;
+  color: var(--fog);
+  cursor: pointer;
+  border-radius: 2.5px;
+  transition: all 0.2s var(--ease);
+}
+
+.vehicleBtn:hover {
+  color: #fff;
+}
+
+.vehicleActive {
+  background: var(--signal-cyan);
+  color: #040914 !important;
+  box-shadow: 0 1px 3px rgba(62, 207, 228, 0.25);
+}
+
+

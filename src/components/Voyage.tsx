@@ -1,6 +1,4 @@
-import { useRef, type ReactNode } from 'react'
-import { VoyageProgressProvider } from '../context/VoyageProgressContext'
-import { useScrollProgress } from '../hooks/useScrollProgress'
+import type { RefObject, ReactNode } from 'react'
 import Beats from './Beats'
 import IntroHero from './IntroHero'
 import ScrollCue from './ScrollCue'
@@ -20,18 +18,23 @@ function StickyStage() {
   )
 }
 
-export default function Voyage({ chrome }: { chrome?: ReactNode }) {
-  const voyageRef = useRef<HTMLElement | null>(null)
-  const progress = useScrollProgress(voyageRef)
-
+export default function Voyage({
+  voyageRef,
+  chrome,
+}: {
+  voyageRef: RefObject<HTMLElement | null>
+  chrome?: ReactNode
+}) {
   return (
-    <VoyageProgressProvider value={progress}>
+    <>
       {chrome}
       <section className={styles.voyage} id="top" ref={voyageRef}>
         <StickyStage />
         <Beats />
         <ScrollCue />
       </section>
-    </VoyageProgressProvider>
+    </>
   )
 }
+
+

@@ -225,3 +225,115 @@
     margin-left: 0;
   }
 }
+
+.sandbox {
+  margin-top: 2rem;
+  padding: 1.2rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--hairline);
+  background: rgba(4, 9, 20, 0.45);
+  transition: all 0.3s var(--ease);
+}
+
+.sandboxCorrupted {
+  border-color: rgba(255, 77, 87, 0.35);
+  background: rgba(255, 77, 87, 0.03);
+}
+
+.sandboxAuthenticated {
+  border-color: rgba(47, 217, 154, 0.35);
+  background: rgba(47, 217, 154, 0.03);
+}
+
+.sandboxTitle {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--fog);
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1.15rem;
+}
+
+.metricCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.65rem;
+  border-radius: 4px;
+  background: rgba(13, 33, 56, 0.45);
+  border: 1px solid rgba(155, 176, 196, 0.1);
+}
+
+.metricLabel {
+  font-size: 0.62rem;
+  color: var(--fog);
+  letter-spacing: 0.02em;
+}
+
+.metricValue {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--paper);
+}
+
+.sandboxCorrupted .metricValue {
+  color: var(--alarm-red);
+}
+
+.sandboxAuthenticated .metricValue {
+  color: var(--clean-mint);
+}
+
+.simControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.simBtn {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.45rem 0.85rem;
+  border-radius: 4px;
+  border: 1px solid var(--hairline);
+  background: rgba(4, 9, 20, 0.6);
+  color: var(--fog);
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+}
+
+.attackBtn:hover,
+.attackBtn.activeBtn {
+  background: var(--alarm-soft);
+  color: var(--alarm-red);
+  border-color: rgba(255, 77, 87, 0.45);
+}
+
+.defendBtn:hover,
+.defendBtn.activeBtn {
+  background: var(--mint-soft);
+  color: var(--clean-mint);
+  border-color: rgba(47, 217, 154, 0.45);
+}
+
+.resetBtn {
+  background: rgba(232, 184, 74, 0.08);
+  border-color: rgba(232, 184, 74, 0.25);
+  color: var(--auth-gold);
+}
+
+.resetBtn:hover {
+  background: var(--auth-soft);
+  color: #fff;
+  border-color: var(--auth-gold);
+}
+

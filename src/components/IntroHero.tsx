@@ -3,8 +3,6 @@ import { useReducedMotion } from '../hooks/useInView'
 import type { IntroPhase } from '../lib/voyageMath'
 import styles from './IntroHero.module.css'
 
-const LEAD = 'Maritime RF authentication for fleets that cannot afford a lie on the bridge.'
-
 const PHASE_RANK: Record<IntroPhase, number> = {
   sky: 0,
   brand: 1,
@@ -31,7 +29,7 @@ function RevealWords({ text, active }: { text: string; active: boolean }) {
 }
 
 export default function IntroHero() {
-  const { phase, introComplete, introT } = useVoyageProgress()
+  const { phase, introComplete, introT, vehicleType } = useVoyageProgress()
   const reduced = useReducedMotion()
   const rank = reduced && !introComplete ? 3 : PHASE_RANK[phase]
   const showBrand = rank >= 1 && rank < 4
@@ -40,6 +38,10 @@ export default function IntroHero() {
   // Fade in the short ready window — Channel/ship follow immediately after
   const exiting = phase === 'ready' || introComplete || introT >= 0.92
   const gone = introComplete
+
+  const leadText = vehicleType === 'plane'
+    ? 'Aviation RF authentication for aircraft fleets that cannot afford a lie in the cockpit.'
+    : 'Maritime RF authentication for fleets that cannot afford a lie on the bridge.'
 
   return (
     <div
@@ -65,7 +67,8 @@ export default function IntroHero() {
         navigation beyond deception
       </p>
 
-      <RevealWords text={LEAD} active={showLead} />
+      <RevealWords text={leadText} active={showLead} />
     </div>
   )
 }
+

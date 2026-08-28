@@ -1,0 +1,104 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  z-index: 99999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.08s cubic-bezier(0.1, 0.8, 0.2, 1);
+  color: var(--signal-cyan);
+}
+
+.active {
+  opacity: 1;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(62, 207, 228, 0.22);
+  animation: cursor-rotate 12s linear infinite;
+}
+
+.corrupted .ring {
+  border-style: dashed;
+  box-shadow: 0 0 8px rgba(255, 77, 87, 0.35);
+  animation: cursor-rotate 3s linear infinite, cursor-shake 0.15s infinite alternate;
+}
+
+.authenticated .ring {
+  border-width: 1.5px;
+  box-shadow: 0 0 10px rgba(47, 217, 154, 0.35);
+}
+
+.core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  background-color: currentColor;
+  border-radius: 50%;
+}
+
+.axisX,
+.axisY {
+  position: absolute;
+  background-color: currentColor;
+  opacity: 0.35;
+}
+
+.axisX {
+  top: 50%;
+  left: -8px;
+  right: -8px;
+  height: 1px;
+}
+
+.axisY {
+  left: 50%;
+  top: -8px;
+  bottom: -8px;
+  width: 1px;
+}
+
+.label {
+  position: absolute;
+  left: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: rgba(4, 9, 20, 0.72);
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  border: 1px solid rgba(155, 176, 196, 0.15);
+  color: currentColor;
+}
+
+.corrupted {
+  color: var(--alarm-red);
+}
+
+.authenticated {
+  color: var(--clean-mint);
+}
+
+@keyframes cursor-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cursor-shake {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-1.2px, 0.8px); }
+  75% { transform: translate(0.8px, -0.8px); }
+}
