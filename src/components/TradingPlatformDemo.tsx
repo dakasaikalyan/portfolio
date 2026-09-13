@@ -85,7 +85,7 @@ export default function TradingPlatformDemo() {
       <div
         className="glass-card"
         style={{
-          padding: '28px',
+          padding: '24px',
           borderRadius: '20px',
           border: '1px solid rgba(6, 182, 212, 0.3)',
           background: 'rgba(11, 17, 30, 0.85)',
@@ -110,12 +110,12 @@ export default function TradingPlatformDemo() {
               <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#f59e0b' }}></div>
               <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#10b981' }}></div>
             </div>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: '#06b6d4', fontWeight: 600 }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: '#06b6d4', fontWeight: 600, wordBreak: 'break-all' }}>
               WebSocket Cluster: ws://trading.netting-engine.internal:8080/stream
             </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
             <button
               onClick={() => setIsRunning(!isRunning)}
               className="btn-secondary"
@@ -128,13 +128,14 @@ export default function TradingPlatformDemo() {
               className={n1Optimized ? 'btn-primary' : 'btn-secondary'}
               style={{ padding: '6px 14px', fontSize: '0.8rem' }}
             >
-              {n1Optimized ? '⚡ N+1 Query Fix Active (-60% DB Load)' : '⚠️ Unoptimized SQL Mode'}
+              {n1Optimized ? '⚡ N+1 Fix Active (-60% DB Load)' : '⚠️ Unoptimized SQL Mode'}
             </button>
           </div>
         </div>
 
         {/* Dynamic Telemetry Metrics Cards */}
         <div
+          className="telemetry-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(4, 1fr)',
@@ -179,15 +180,15 @@ export default function TradingPlatformDemo() {
 
         {/* Live Ticking Stream Table */}
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
             <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#f8fafc' }}>
               ⚡ Live Order Stream & Netting Engine Logs
             </h4>
             <span className="badge badge-green" style={{ fontSize: '0.75rem' }}>Kafka Consumer: Active</span>
           </div>
 
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}>
+          <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+            <table style={{ width: '100%', minWidth: '600px', borderCollapse: 'collapse', textAlign: 'left', fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--border-glass)', color: '#64748b', fontSize: '0.75rem', textTransform: 'uppercase' }}>
                   <th style={{ padding: '10px' }}>Order ID</th>

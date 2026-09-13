@@ -109,6 +109,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-primary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: var(--gradient-btn);
   color: #ffffff;
@@ -133,6 +134,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-secondary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: rgba(30, 41, 59, 0.7);
   color: var(--text-main);
@@ -205,6 +207,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -218,4 +221,100 @@ h1, h2, h3, h4, h5, h6 {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-cyan);
+}
+
+/* ==========================================================================
+   RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+
+/* Tablet & Mobile Layout (< 960px) */
+@media (max-width: 960px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem !important;
+  }
+  
+  .hero-metrics {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .arch-detail-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Mobile Screens (< 768px) */
+@media (max-width: 768px) {
+  section {
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .nav-desktop-links {
+    display: none !important;
+  }
+
+  .nav-mobile-menu {
+    display: flex !important;
+  }
+
+  .hero-title {
+    font-size: 2.1rem !important;
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem !important;
+  }
+
+  .hero-ctas {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .hero-ctas a, .hero-ctas button {
+    width: 100% !important;
+  }
+
+  .telemetry-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .benchmark-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .floating-pill-1 {
+    left: 0px !important;
+    top: -25px !important;
+  }
+
+  .floating-pill-2 {
+    right: 0px !important;
+    bottom: -20px !important;
+  }
+}
+
+/* Small Mobile Screens (< 480px) */
+@media (max-width: 480px) {
+  .hero-metrics {
+    grid-template-columns: 1fr !important;
+  }
+
+  .telemetry-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .glass-card {
+    padding: 18px !important;
+  }
 }

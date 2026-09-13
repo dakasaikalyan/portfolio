@@ -114,7 +114,7 @@ export default function ArchitectureDiagram() {
       <div
         className="glass-card"
         style={{
-          padding: '32px',
+          padding: '24px',
           borderRadius: '20px',
           border: '1px solid rgba(56, 189, 248, 0.3)',
           background: 'rgba(11, 17, 30, 0.85)',
@@ -124,8 +124,8 @@ export default function ArchitectureDiagram() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))',
-            gap: '16px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+            gap: '14px',
             position: 'relative',
           }}
         >
@@ -139,7 +139,7 @@ export default function ArchitectureDiagram() {
                   background: isSelected ? 'rgba(30, 41, 59, 0.95)' : 'rgba(15, 23, 42, 0.6)',
                   border: isSelected ? `2px solid ${node.color}` : '1px solid var(--border-glass)',
                   borderRadius: '14px',
-                  padding: '20px 14px',
+                  padding: '16px 12px',
                   textAlign: 'center',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
@@ -147,13 +147,13 @@ export default function ArchitectureDiagram() {
                   transform: isSelected ? 'translateY(-4px)' : 'none',
                 }}
               >
-                <div style={{ fontSize: '2rem', marginBottom: '8px' }}>{node.icon}</div>
-                <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#f8fafc', marginBottom: '4px' }}>
+                <div style={{ fontSize: '1.8rem', marginBottom: '6px' }}>{node.icon}</div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#f8fafc', marginBottom: '4px' }}>
                   {node.name}
                 </div>
                 <span
                   style={{
-                    fontSize: '0.72rem',
+                    fontSize: '0.7rem',
                     color: node.color,
                     fontWeight: 600,
                     textTransform: 'uppercase',
@@ -169,7 +169,7 @@ export default function ArchitectureDiagram() {
 
       {/* Selected Node Details Drawer */}
       <div
-        className="glass-card"
+        className="glass-card arch-detail-grid"
         style={{
           padding: '28px',
           borderRadius: '16px',

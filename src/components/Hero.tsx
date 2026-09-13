@@ -15,6 +15,7 @@ export default function Hero() {
       }}
     >
       <div
+        className="hero-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: '1.1fr 0.9fr',
@@ -34,6 +35,7 @@ export default function Hero() {
           </div>
 
           <h1
+            className="hero-title"
             style={{
               fontSize: '3.2rem',
               fontWeight: 800,
@@ -46,6 +48,7 @@ export default function Hero() {
           </h1>
 
           <h2
+            className="hero-subtitle"
             style={{
               fontSize: '1.4rem',
               fontWeight: 600,
@@ -69,6 +72,7 @@ export default function Hero() {
 
           {/* Quick Metrics Cards Grid */}
           <div
+            className="hero-metrics"
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(4, 1fr)',
@@ -95,7 +99,7 @@ export default function Hero() {
           </div>
 
           {/* CTA Buttons */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+          <div className="hero-ctas" style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
             <a href="#demo" className="btn-primary">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polygon points="5 3 19 12 5 21 5 3"></polygon>
@@ -219,7 +223,7 @@ export default function Hero() {
 
           {/* Floating Pill Accent 1 */}
           <div
-            className="glass-card"
+            className="glass-card floating-pill-1"
             style={{
               position: 'absolute',
               top: '-18px',
@@ -243,7 +247,7 @@ export default function Hero() {
 
           {/* Floating Pill Accent 2 */}
           <div
-            className="glass-card"
+            className="glass-card floating-pill-2"
             style={{
               position: 'absolute',
               bottom: '10px',

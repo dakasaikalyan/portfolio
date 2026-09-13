@@ -12,7 +12,7 @@ export default function Projects() {
       title: 'POS & Attendance Management System',
       category: 'Enterprise SaaS',
       tech: ['MongoDB', 'Express.js', 'React.js', 'Node.js', 'Redux'],
-      desc: 'Integrated Point-of-Sale (POS) and staff attendance management platform featuring automated leave tracking, inventory workflows, and real-time sales dashboards.',
+      desc: 'Integrated Point-of-Sale (POS) and staff attendance management platform featuring automated leave tracking, inventory workflows, and sales analytics dashboards.',
       highlights: ['20% productivity gain', 'Automated leave tracking', 'Real-time billing analytics'],
       badgeColor: 'badge-green'
     },
@@ -59,9 +59,10 @@ export default function Projects() {
       </div>
 
       <div
+        className="projects-grid"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(500px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
           gap: '24px',
         }}
       >
@@ -70,7 +71,7 @@ export default function Projects() {
             key={idx}
             className="glass-card"
             style={{
-              padding: '28px',
+              padding: '24px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
@@ -80,7 +81,7 @@ export default function Projects() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <span className={`badge ${p.badgeColor}`}>{p.category}</span>
               </div>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#f8fafc', marginBottom: '12px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#f8fafc', marginBottom: '12px' }}>
                 {p.title}
               </h3>
               <p style={{ color: '#94a3b8', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '20px' }}>
