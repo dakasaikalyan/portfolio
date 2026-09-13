@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import resumePdf from '../assets/Sai_Kalyan_Daka_Resume.pdf';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -74,7 +75,7 @@ export default function Navbar() {
       {/* Resume CTA */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         <a
-          href="/Sai_Kalyan_Daka_Resume.pdf"
+          href={resumePdf}
           target="_blank"
           rel="noopener noreferrer"
           className="btn-primary"

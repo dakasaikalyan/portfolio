@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import resumePdf from '../assets/Sai_Kalyan_Daka_Resume.pdf';
 
 export default function ContactFooter() {
   const [copied, setCopied] = useState(false);
@@ -67,7 +68,7 @@ export default function ContactFooter() {
           </a>
 
           <a
-            href="/Sai_Kalyan_Daka_Resume.pdf"
+            href={resumePdf}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-secondary"
